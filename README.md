@@ -190,8 +190,8 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ## Screenshot
 
-![Screenshot 1](screenshot-1.png)
-![Screenshot 2](screenshot-2.png)
-![Screenshot 3](screenshot-3.png)
-![Screenshot 4](screenshot-4.png)
+<img src ="Screenshot-1.png">
+<img src ="Screenshot-2.png">
+<img src ="Screenshot-3.png">
+<img src ="Screenshot-4.png">
 
