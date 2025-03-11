@@ -1,58 +1,66 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-    select {
-        background-position: right 0.75rem center !important;
-        background-size: 12px 12px !important;
-    }
-</style>
 
 <div class="container-fluid mx-auto px-4 py-6">
     <div class="mx-auto bg-white shadow-md rounded-lg p-6">
-        <h2 class="text-2xl font-bold mb-4 text-gray-800"><a class="text-red-600 hover:text-blue-500" href="/dashboard">Dashboard</a> / Employees List</h2>
+        <!-- Top Row: Breadcrumb and Right Side Buttons -->
+        <div class="top-row ">
+            <!-- Breadcrumb -->
+            <div class="text-info">
+                <a class="text-red-600 hover:text-blue-500" href="/dashboard">Dashboard</a> / Employees List
+            </div>
+
+            <!-- Right Side Buttons -->
+            <div class="right-side-buttons">
+                <!-- Export Form -->
+                <div class="export-form">
+                    <form action="{{ route('reports.generate') }}" method="GET" class="flex items-center gap-2">
+                        <label> Export Format :-> </label>
+                        <select name="format" id="format" class="input-field">
+                            <option value="pdf">PDF</option>
+                            <option value="csv">CSV</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">
+                            Export Report
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Add Employee Button -->
+                <a href="{{ route('employees.create') }}" class="btn btn-primary">
+                    + Add Employee
+                </a>
+            </div>
+        </div>
 
         <!-- Success Message -->
         @if (session('success'))
-            <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
-                {{ session('success') }}
-            </div>
+        <!-- Success Alert Modal -->
+        <div id="success-alert" class="fixed top-4 right-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-lg flex justify-between items-center w-96">
+            <span>{{ session('success') }}</span>
+            <button id="close-alert" class="text-green-700 hover:text-green-900">
+                &times; <!-- Close icon -->
+            </button>
+        </div>
         @endif
 
-        <!-- Search, Filter, and Export Form -->
-        <div class="mb-4 flex justify-between items-center flex-wrap gap-4">
-            <!-- Add Employee Button -->
-            <a href="{{ route('employees.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
-                + Add Employee
-            </a>
-
-            <!-- Export Form -->
-            <form action="{{ route('reports.generate') }}" method="GET" class="flex items-center space-x-4">
-                <label for="format" class="text-gray-700">Export Format:</label>
-                <select name="format" id="format" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="pdf">PDF</option>
-                    <option value="csv">CSV</option>
-                </select>
-                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
-                    Export Report
-                </button>
-            </form>
-
-            <!-- Search and Filter Form -->
-            <form action="{{ route('employees.index') }}" method="GET" class="flex items-center space-x-4">
-                <!-- Search by Name, Email, or Position -->
+        <!-- Search and Filter Form -->
+        <div class="search-filters">
+            <form action="{{ route('employees.index') }}" method="GET" class="flex items-center gap-2 flex-wrap">
+                <!-- Search Input -->
                 <input
                     type="text"
                     name="search"
                     placeholder="Search by name, email, or position"
                     value="{{ request('search') }}"
-                    class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="input-field"
                 />
 
-                <!-- Filter by Department -->
+                <!-- Department Filter -->
                 <select
                     name="department"
-                    class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="input-field"
                 >
                     <option value="">All Departments</option>
                     @foreach ($departments as $department)
@@ -62,10 +70,10 @@
                     @endforeach
                 </select>
 
-                <!-- Filter by Position -->
+                <!-- Position Filter -->
                 <select
                     name="position"
-                    class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="input-field"
                 >
                     <option value="">All Positions</option>
                     @foreach ($positions as $position)
@@ -75,33 +83,30 @@
                     @endforeach
                 </select>
 
-                <!-- Filter by Salary Range -->
+                <!-- Salary Range Filters -->
                 <input
                     type="number"
                     name="min_salary"
                     placeholder="Min Salary"
                     value="{{ request('min_salary') }}"
-                    class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="input-field"
                 />
                 <input
                     type="number"
                     name="max_salary"
                     placeholder="Max Salary"
                     value="{{ request('max_salary') }}"
-                    class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="input-field"
                 />
 
                 <!-- Submit Button -->
-                <button
-                    type="submit"
-                    class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
-                >
+                <button type="submit" class="btn btn-primary">
                     Search
                 </button>
 
                 <!-- Clear Filters Button -->
                 @if (request('search') || request('department') || request('position') || request('min_salary') || request('max_salary'))
-                    <a href="{{ route('employees.index') }}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">
+                    <a href="{{ route('employees.index') }}" class="btn btn-secondary">
                         Clear Filters
                     </a>
                 @endif
@@ -109,37 +114,38 @@
         </div>
 
         <!-- Employees Table -->
-        <div class="overflow-x-auto">
-            <table class="w-full text-left bg-white border border-gray-200 rounded-lg">
+        <div class="table-container">
+            <table>
                 <thead>
-                    <tr class="bg-gray-200 text-gray-700">
-                        <th class="py-3 px-4 border">Sr</th>
-                        <th class="py-3 px-4 border">Name</th>
-                        <th class="py-3 px-4 border">Email</th>
-                        <th class="py-3 px-4 border">Position</th>
-                        <th class="py-3 px-4 border">Department</th>
-                        <th class="py-3 px-4 border">Actions</th>
+                    <tr>
+                        <th>Sr</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Position</th>
+                        <th>Department</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($employees as $key => $employee)
-                        <tr class="border-b hover:bg-gray-100">
-                            <!-- Calculate Serial Number -->
-                            <td class="py-3 px-4 border">
-                                {{ ($employees->currentPage() - 1) * $employees->perPage() + $key + 1 }}
-                            </td>
-                            <td class="py-3 px-4 border">{{ $employee->name }}</td>
-                            <td class="py-3 px-4 border">{{ $employee->email }}</td>
-                            <td class="py-3 px-4 border">{{ $employee->position }}</td>
-                            <td class="py-3 px-4 border">{{ $employee->department }}</td>
-                            <td class="py-3 px-4 border">
-                                <div class="flex items-center space-x-2">
-                                    <a href="{{ route('employees.edit', $employee->id) }}" class="text-yellow-500 hover:underline">Edit</a>
-                                    <span class="text-gray-400">|</span>
+                        <tr>
+                            <!-- Serial Number -->
+                            <td>{{ ($employees->currentPage() - 1) * $employees->perPage() + $key + 1 }}</td>
+                            <td>{{ $employee->name }}</td>
+                            <td>{{ $employee->email }}</td>
+                            <td>{{ $employee->position }}</td>
+                            <td>{{ $employee->department }}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-primary">
+                                        Edit
+                                    </a>
                                     <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-500 hover:underline">Delete</button>
+                                        <button type="submit" class="btn delete-button" onclick="return confirm('Are you sure you want to delete this employee?')">
+                                            Delete
+                                        </button>
                                     </form>
                                 </div>
                             </td>
@@ -150,14 +156,14 @@
         </div>
 
         <!-- Pagination Links -->
-        <div class="mt-4">
+        <div class="pagination">
             {{ $employees->appends([
                 'search' => request('search'),
                 'department' => request('department'),
                 'position' => request('position'),
                 'min_salary' => request('min_salary'),
                 'max_salary' => request('max_salary'),
-            ])->links() }}
+            ])->links('employees.pagination') }} <!-- Use a custom pagination view -->
         </div>
     </div>
 </div>
