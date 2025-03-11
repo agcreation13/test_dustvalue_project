@@ -1,0 +1,251 @@
+/* Table Styles */
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.employee-table th, .employee-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.employee-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.employee-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.employee-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Action Buttons */
+.action-button {
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.edit-button {
+    background-color: #ffc107;
+    color: black;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.action-button:hover {
+    opacity: 0.9;
+}
+
+/* Input Fields */
+.input-field {
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Table Container */
+.table-container {
+    overflow-x: auto;
+    margin-top: 1.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+    color: #374151;
+}
+
+tr:hover {
+    background-color: #f9fafb;
+}
+
+/* Action Buttons Container */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-buttons .btn {
+    padding: 8px;
+    cursor: pointer;
+    align-self: center;
+    font-size: 15px;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.pagination ul {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination li {
+    display: inline-block;
+}
+
+.pagination a, .pagination span {
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    color: #3b82f6;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.pagination .active span {
+    background-color: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+}
+
+.pagination .disabled span {
+    color: #6b7280;
+    cursor: not-allowed;
+}
+
+/* Top Row Styles */
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 37px 10px;
+    background: #e2edff;
+    border-radius: 10px;
+}
+
+/* Right Side Buttons */
+.right-side-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Export and Search Filters */
+.export-search-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.export-form {
+    flex: 1;
+    min-width: 200px;
+}
+
+.search-filters {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-width: 500px;
+}
+
+/* Success Alert Styling */
+#success-alert {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background-color: #f0fdf4; /* Light green background */
+    border-left: 4px solid #4ade80; /* Green border */
+    color: #166534; /* Dark green text */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 24rem; /* Adjust width as needed */
+    z-index: 1000; /* Ensure it appears above other content */
+    animation: slideIn 0.5s ease-out;
+}
+
+/* Close Button Styling */
+#close-alert {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #166534; /* Dark green text */
+}
+
+#close-alert:hover {
+    color: #14532d; /* Darker green on hover */
+}
+
+/* Slide-in Animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Fade-out Animation */
+#success-alert.hide {
+    animation: slideOut 0.5s ease-in forwards;
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+/* Select Dropdown Styling */
+select {
+    background-position: right 0.75rem center !important;
+    background-size: 12px 12px !important;
+}

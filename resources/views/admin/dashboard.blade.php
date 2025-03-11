@@ -1,17 +1,15 @@
-{{-- admin dashboard --}}
-<div class="mt-4 p-4 bg-blue-100 rounded-lg">
-    <div class="flex justify-between items-center">
+{{-- Admin Dashboard --}}
+<div class="admin-dashboard">
+    <div class="dashboard-content">
         <!-- Left Side: Text Information -->
-        <div>
-            <h2 class="text-xl font-bold">Admin Dashboard {{ $tenant }}</h2>
+        <div class="text-info">
+            <h2>Admin Dashboard {{ $tenant }}</h2>
             <p>Welcome, Admin! You have full access to the system.</p>
         </div>
         
         <!-- Right Side: Button -->
-        <a href="{{ route('employees.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+        <a href="{{ route('employees.index') }}" class="btn btn-primary">
             Manage Employees
         </a>
     </div>
 </div>
-
-
