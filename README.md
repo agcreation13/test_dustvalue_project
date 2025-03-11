@@ -194,4 +194,6 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 <img src ="Screenshot-2.png">
 <img src ="Screenshot-3.png">
 <img src ="Screenshot-4.png">
+<img src ="Screenshot-5.png">
+<img src ="Screenshot-6.png">
 
